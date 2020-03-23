@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script create a new repository on GitHub, then pushes the local
+# This script creates a new repository on GitHub, then pushes the local
 # repository from the current directory to the new remote directory.
 
 # This script is a slight modification to https://gist.github.com/jerrykrinock/6618003,
