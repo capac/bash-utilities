@@ -14,4 +14,4 @@ The arguments are the message digest, the name of the file to calculate the hash
 
 ### git-create-remote-repo
 
-`git-create-remote-repo` is a script that creates a new, remote repository on GitHub, then pushes the local repository from the current directory to the new remote directory. It requires an existing local repsotory to work.
+`git-create-remote-repo` is a bash script that creates a new, remote repository on GitHub, and then pushes the local repository from the current directory to the new remote directory. It requires an existing local repository to work.
