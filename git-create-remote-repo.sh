@@ -49,4 +49,4 @@ curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\": \"$REPONAME\"
 # Set the freshly created repo to the origin and push
 # You will need to have added your public key to your GitHub account
 git remote add origin https://github.com/$USERNAME/$REPONAME.git
-git push -u origin master
+git push -u origin main
