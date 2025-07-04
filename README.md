@@ -15,3 +15,7 @@ The arguments are the message digest, the name of the file to calculate the hash
 ### git-create-remote-repo
 
 `git-create-remote-repo` is a bash script that creates a new, remote repository on GitHub, and then pushes the local repository from the current directory to the new remote directory. It requires an existing local repository to work.
+
+### update_conda_envs.sh
+
+`update_conda_envs.sh` is a bash script that updates all installed Anaconda environment. Requires a working installation of Anaconda. Options: `--dry-run` to dry test what would be updated on each Anaconda environment.
