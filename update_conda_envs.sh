@@ -18,6 +18,6 @@ for env in $envs; do
     if [ "$DRY_RUN" = true ]; then
         conda update -n "$env" --all --dry-run
     else
-        conda update -n "$env" --all -y
+        conda update -n "$env" --all
     fi
 done
