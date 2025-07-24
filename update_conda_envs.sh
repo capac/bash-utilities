@@ -1,23 +1,56 @@
 #!/bin/bash
 
-# Check if --dry-run flag is passed
+# Default flags
 DRY_RUN=false
-if [ "$1" == "--dry-run" ]; then
-    DRY_RUN=true
-    echo "Running in dry-run mode. No changes will be made."
+AUTO_Y=false
+
+# Parse arguments
+for arg in "$@"; do
+    case $arg in
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        -y)
+            AUTO_Y=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $arg"
+            echo "Usage: $0 [--dry-run] [-y]"
+            exit 1
+            ;;
+    esac
+done
+
+# Build conda update command options
+UPDATE_OPTIONS="--all"
+if [ "$DRY_RUN" = true ]; then
+    UPDATE_OPTIONS="$UPDATE_OPTIONS --dry-run"
+fi
+if [ "$AUTO_Y" = true ]; then
+    UPDATE_OPTIONS="$UPDATE_OPTIONS -y"
 fi
 
-# Get all Conda environment names, skipping header and empty lines
+# Get environment names (exclude headers/empty lines)
 envs=$(conda env list | awk '{print $1}' | grep -vE '^#|^$')
 
-# Loop through environments
+# Update each environment
 for env in $envs; do
     echo "-------------------------------------------"
-    echo "Processing environment: $env"
+    echo "Updating environment: $env"
+    
+    # Determine environment location
+    ENV_PATH=$(conda env list | awk -v env="$env" '$1 == env {print $NF}')
+    PINNED_FILE="$ENV_PATH/conda-meta/pinned"
 
-    if [ "$DRY_RUN" = true ]; then
-        conda update -n "$env" --all --dry-run
-    else
-        conda update -n "$env" --all
+    # Check for pinned packages
+    if [ -f "$PINNED_FILE" ]; then
+        echo "WARNING: Environment '$env' has pinned packages:"
+        cat "$PINNED_FILE"
+        echo ""
     fi
+
+    # Run the update
+    conda update -n "$env" $UPDATE_OPTIONS
 done
