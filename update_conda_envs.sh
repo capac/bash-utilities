@@ -33,7 +33,7 @@ if [ "$AUTO_Y" = true ]; then
 fi
 
 # Get environment names (exclude headers/empty lines)
-envs=$(conda env list | awk '{print $1}' | grep -vE '^#|^$')
+envs=$(conda env list | awk -v root="/opt/miniconda3" '$NF ~ "^"root {print $1}')
 
 # Update each environment
 for env in $envs; do
